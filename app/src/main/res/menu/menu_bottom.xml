@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    app:cnb_unselectedColor="#fff"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        app:cnb_backgroundColor="#2A638E"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"/>
+    <item
+        android:id="@+id/activity"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Profile"
+        app:cnb_backgroundColor="#2A638E"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"/>
+    <item
+        android:id="@+id/favorites"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        android:title="Courses"
+        app:cnb_backgroundColor="#2A638E"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"/>
+
+</menu>
