@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "191408103480",
+    "firebase_url": "https://lmsapp-f43be.firebaseio.com",
+    "project_id": "lmsapp-f43be",
+    "storage_bucket": "lmsapp-f43be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191408103480:android:26aa534d190230177486cd",
+        "android_client_info": {
+          "package_name": "com.example.lmsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191408103480-ceifv25c163rb96tu7btnaon55plk5rq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUi01svIl_--swWN482X0_BhR08afWSls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191408103480-ceifv25c163rb96tu7btnaon55plk5rq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
