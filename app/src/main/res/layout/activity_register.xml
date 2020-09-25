@@ -77,7 +77,7 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber2"
+        app:layout_constraintEnd_toStartOf="@+id/txtRegContact"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
@@ -93,7 +93,7 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTextPassword"
+        app:layout_constraintEnd_toStartOf="@+id/txtRegPassword"
         app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
@@ -125,7 +125,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber2"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegContact"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
@@ -143,7 +143,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btnCancel"
         app:layout_constraintHorizontal_bias="0.628"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegPassword"
         app:layout_constraintVertical_bias="0.917" />
 
     <Button
@@ -160,11 +160,11 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegPassword"
         app:layout_constraintVertical_bias="0.916" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxStudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
@@ -173,10 +173,10 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtRegPassword" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/checkBoxTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="72dp"
@@ -185,11 +185,11 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/btnCancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegPassword"
         app:layout_constraintVertical_bias="0.504" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/txtRegPassword"
         android:layout_width="219dp"
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
@@ -202,7 +202,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtRegUsername" />
 
     <EditText
-        android:id="@+id/editTextNumber2"
+        android:id="@+id/txtRegContact"
         android:layout_width="219dp"
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
