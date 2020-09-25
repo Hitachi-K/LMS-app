@@ -2,12 +2,14 @@ package com.example.lmsapp;
 
 public class User {
 
-    String email;
-    String name;
-    String userName;
-    String password;
-    Long contact;
-    String type;
+    private String email;
+    private String name;
+    private String userName;
+    private String password;
+    private Long contact;
+    private String type;
+
+    public User() {}
 
     public String getEmail() {
         return email;
@@ -24,9 +26,6 @@ public class User {
     public void setContact(Long contact) {
         this.contact = contact;
     }
-
-    public User() {}
-
 
     public String getName() {
         return name;

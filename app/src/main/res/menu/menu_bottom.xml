@@ -10,17 +10,19 @@
         app:cnb_backgroundColor="#2A638E"
         app:cnb_iconColor="#fff"
         app:cnb_textColor="#fff"/>
-    <item
-        android:id="@+id/activity"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="Profile"
-        app:cnb_backgroundColor="#2A638E"
-        app:cnb_iconColor="#fff"
-        app:cnb_textColor="#fff"/>
+
     <item
         android:id="@+id/favorites"
         android:icon="@drawable/ic_baseline_menu_book_24"
         android:title="Courses"
+        app:cnb_backgroundColor="#2A638E"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"/>
+
+    <item
+        android:id="@+id/activity"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Profile"
         app:cnb_backgroundColor="#2A638E"
         app:cnb_iconColor="#fff"
         app:cnb_textColor="#fff"/>
