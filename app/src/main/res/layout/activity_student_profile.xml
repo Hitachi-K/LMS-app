@@ -13,11 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="112dp"
         android:fontFamily="@font/nunito_sans"
-        android:text="Student ID:"
+        android:text="Name:"
         android:textColor="#000000"
         android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/txtStudentID"
-        app:layout_constraintHorizontal_bias="0.646"
+        app:layout_constraintHorizontal_bias="0.871"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -27,23 +27,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/nunito_sans"
-        android:text="Name:"
+        android:text="Username:"
         android:textColor="#000000"
         android:textSize="22sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtStudentName"
+        app:layout_constraintEnd_toStartOf="@+id/txtStudentUsername"
         app:layout_constraintHorizontal_bias="0.796"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <EditText
-        android:id="@+id/txtStudentName"
+        android:id="@+id/txtStudentUsername"
         android:layout_width="214dp"
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
         android:autofillHints=""
         android:background="@drawable/input_field"
         android:ems="10"
-        android:hint="Enter Name"
         android:inputType="textEmailAddress"
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,43 +54,27 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/nunito_sans"
-        android:text="Username:"
+        android:text="Email:"
         android:textColor="#000000"
         android:textSize="22sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtStudentUsername"
-        app:layout_constraintHorizontal_bias="0.657"
+        app:layout_constraintEnd_toStartOf="@+id/txtStudentEmail"
+        app:layout_constraintHorizontal_bias="0.829"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-    <EditText
-        android:id="@+id/txtStudentUsername"
-        android:layout_width="214dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="20dp"
-        android:autofillHints=""
-        android:background="@drawable/input_field"
-        android:ems="10"
-        android:hint="@string/enter_username"
-        android:inputType="textEmailAddress"
-        android:textColorHint="@color/grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtStudentName" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="@font/nunito_sans"
         android:text="Contact:"
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/txtStudentContact"
-        app:layout_constraintHorizontal_bias="0.757"
+        app:layout_constraintHorizontal_bias="0.787"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -99,25 +82,24 @@
         android:id="@+id/txtStudentContact"
         android:layout_width="214dp"
         android:layout_height="46dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="203dp"
         android:background="@drawable/input_field"
         android:ems="10"
-        android:hint="Contact"
         android:inputType="textPersonName"
         android:textColorHint="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.918"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtStudentUsername"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintTop_toBottomOf="@+id/txtStudentEmail"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/txtStudentPassword"
         android:layout_width="214dp"
         android:layout_height="46dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/input_field"
         android:ems="10"
         android:inputType="textPassword"
@@ -136,7 +118,6 @@
         android:autofillHints=""
         android:background="@drawable/input_field"
         android:ems="10"
-        android:hint="Student ID"
         android:inputType="textEmailAddress"
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
@@ -178,13 +159,13 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/nunito_sans"
         android:text="Password:"
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/txtStudentPassword"
-        app:layout_constraintHorizontal_bias="0.708"
+        app:layout_constraintHorizontal_bias="0.81"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -227,6 +208,22 @@
             app:cnb_menuResource="@menu/menu_bottom" />
 
     </RelativeLayout>
+
+    <EditText
+        android:id="@+id/txtStudentEmail"
+        android:layout_width="214dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:textColorHint="@color/grey"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.918"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtStudentUsername"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

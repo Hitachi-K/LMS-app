@@ -32,9 +32,13 @@ public class Register extends AppCompatActivity {
     //Methods to clear all inputs
     public void clearControls() {
         regName.setText("");
+        regEmail.setText("");
+        regContact.setText("");
         regUsername.setText("");
         regContact.setText("");
         regPassword.setText("");
+        checkStudent.setChecked(false);
+        checkTeacher.setChecked(false);
     }
 
 
@@ -112,18 +116,24 @@ public class Register extends AppCompatActivity {
                         if (checkStudent.isChecked()) {
                             user.setType(checkStudentValue);
                             databaseReference.child("U"+(counter + 1)).setValue(user);
+                            Intent intentRegister = new Intent(Register.this, StudentHomePage.class);
+                            startActivity(intentRegister);
                         }
 
                         if (checkTeacher.isChecked()) {
                             user.setType(checkTeacherValue);
                             databaseReference.child("U"+(counter + 1)).setValue(user);
+                            Intent intentRegister = new Intent(Register.this, TeacherHomePage.class);
+                            startActivity(intentRegister);
                         }
                         Toast.makeText(getApplicationContext(),"Successfully Registered", Toast.LENGTH_SHORT).show();
+                        clearControls();
                     }
                 }
                 catch (NumberFormatException e) {
                     Toast.makeText(getApplicationContext(),"Invalid Contact Number", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -135,5 +145,6 @@ public class Register extends AppCompatActivity {
                 startActivity(intentCancel);
             }
         });
+
     }
 }
