@@ -11,7 +11,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".TeacherHomePage"></activity>
         <activity android:name=".AllCourses" />
-        <activity android:name=".StudentProfile"/>
+        <activity android:name=".StudentProfile">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".StudentHomePage" />
         <activity android:name=".TeacherProfile" />
         <activity android:name=".Attendance" />
