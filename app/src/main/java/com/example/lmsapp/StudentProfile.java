@@ -17,48 +17,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class StudentProfile extends AppCompatActivity {
 
-    //defining item variable
-    EditText txtStudentID, txtStudentUsername, txtStudentEmail, txtStudentContact, txtStudentPassword;
-    Button btnEdit;
-    DatabaseReference dbref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_profile);
 
-        //mapping the variables to the widgets
-        txtStudentID = (EditText)findViewById(R.id.txtStudentID);
-        txtStudentUsername = (EditText)findViewById(R.id.txtStudentUsername);
-        txtStudentEmail = (EditText)findViewById(R.id.txtStudentEmail);
-        txtStudentContact = (EditText)findViewById(R.id.txtStudentContact);
-        txtStudentPassword = (EditText)findViewById(R.id.txtStudentPassword);
-        btnEdit = (Button)findViewById(R.id.btnEdit);
-
-        //to obtain the data by type
-        Query checkType = dbref.orderByChild("type").equalTo("Student");
-
-        checkType.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChildren()) {
-                    txtStudentID.setText(dataSnapshot.child("U1").child("name").getValue().toString());
-                    txtStudentUsername.setText(dataSnapshot.child("U1").child("userName").getValue().toString());
-                    txtStudentEmail.setText(dataSnapshot.child("U1").child("email").getValue().toString());
-                    txtStudentContact.setText(dataSnapshot.child("U1").child("contact").getValue().toString());
-                    txtStudentPassword.setText(dataSnapshot.child("U1").child("password").getValue().toString());
-                }
-
-                else {
-                    Toast.makeText(getApplicationContext(), "no data source available", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
     }
 }
