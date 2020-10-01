@@ -83,7 +83,7 @@ public class Register extends AppCompatActivity {
 
                 // declared variables for email and password
                 final String email = regEmail.getText().toString().trim();
-                String password = regPassword.getText().toString().trim();
+                final String password = regPassword.getText().toString().trim();
                 final String name = regName.getText().toString().trim();
                 final long contact = Long.parseLong(regContact.getText().toString().trim());
 
@@ -112,53 +112,97 @@ public class Register extends AppCompatActivity {
                     }  //end of validation
 
                     else {
+
+                        //Storing data by type Student
                         if (checkStudent.isChecked()) {
-                            type = checkStudentValue;
+                            final String typeStudent = checkStudentValue;
+
+                            progressDialog.show();
+
+                            // Registering method
+                            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(Register.this,new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                progressDialog.dismiss();
+
+                                                userID = firebaseAuth.getCurrentUser().getUid();
+                                                userEmail = firebaseAuth.getCurrentUser().getEmail();
+                                                DocumentReference docRef = firebaseFirestore.collection("Users").document(userID);
+                                                Map<String, Object> user = new HashMap<>();
+                                                user.put("Name", name);
+                                                user.put("Contact", contact);
+                                                user.put("Email", email);
+                                                user.put("Password", password);
+                                                user.put("Type", typeStudent);
+
+                                                docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("TAG", "onSuccess: Registered " + userID);
+                                                        Toast.makeText(Register.this, "Successfully registered: " + userEmail, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                                //Intent to Student Home Page
+                                                    startActivity(new Intent(getApplicationContext(), StudentHomePage.class));
+                                            }
+                                            else {
+                                                // If sign in fails, display a message to the user.
+                                                progressDialog.dismiss();
+                                                Toast.makeText(Register.this, "Error!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+                            clearControls();  //method to clear the inputs
                         }
+
+                        // Storing data by type Teacher
                         if (checkTeacher.isChecked()) {
-                            type = checkTeacherValue;
+                            final String typeTeacher = checkTeacherValue;
+
+                            progressDialog.show();
+
+                            // Registering method
+                            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(Register.this,new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                progressDialog.dismiss();
+
+                                                userID = firebaseAuth.getCurrentUser().getUid();
+                                                userEmail = firebaseAuth.getCurrentUser().getEmail();
+                                                DocumentReference docRef = firebaseFirestore.collection("Users").document(userID);
+                                                Map<String, Object> user = new HashMap<>();
+                                                user.put("Name", name);
+                                                user.put("Contact", contact);
+                                                user.put("Email", email);
+                                                user.put("Password", password);
+                                                user.put("Type", typeTeacher);
+
+                                                docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d("TAG", "onSuccess: Registered " + userID);
+                                                        Toast.makeText(Register.this, "Successfully registered: " + userEmail, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                                // intent to Teacher home page
+                                                    startActivity(new Intent(getApplicationContext(), TeacherHomePage.class));
+                                            }
+                                            else {
+                                                // If sign in fails, display a message to the user.
+                                                progressDialog.dismiss();
+                                                Toast.makeText(Register.this, "Error!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+                            clearControls();  //method to clear the inputs
                         }
-                        progressDialog.show();
 
-                        // Registering method
-                        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(Register.this,new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            progressDialog.dismiss();
-
-                                            userID = firebaseAuth.getCurrentUser().getUid();
-                                            userEmail = firebaseAuth.getCurrentUser().getEmail();
-                                            DocumentReference docRef = firebaseFirestore.collection("Users").document(userID);
-                                            Map<String, Object> user = new HashMap<>();
-                                            user.put("Name", name);
-                                            user.put("Contact", contact);
-                                            user.put("Email", email);
-
-                                            docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Log.d("TAG", "onSuccess: Registered " + userID);
-                                                    Toast.makeText(Register.this, "Successfully registered: " + userEmail, Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                            if (type == checkStudentValue) {
-                                                startActivity(new Intent(getApplicationContext(), StudentHomePage.class));
-                                            }
-                                            else if (type == checkTeacherValue) {
-                                                startActivity(new Intent(getApplicationContext(), TeacherHomePage.class));
-                                            }
-                                        }
-                                        else {
-                                            // If sign in fails, display a message to the user.
-                                            progressDialog.dismiss();
-                                            Toast.makeText(Register.this, "Error!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-
-                        clearControls();  //method to clear the inputs
                     }
                 }
                 catch (NumberFormatException e) {

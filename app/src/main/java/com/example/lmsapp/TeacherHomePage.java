@@ -33,9 +33,10 @@ public class TeacherHomePage extends AppCompatActivity {
         //mapping variables to items
         FullName = (TextView)findViewById(R.id.txtFullName);
         subjects = (Button)findViewById(R.id.btnTeacherMySubjects);
+        schedule = (Button)findViewById(R.id.btnTeacherSchedule);
         attendance = (Button)findViewById(R.id.btnAttendance);
-        ExamReports = (Button)findViewById(R.id.btnExamReports);
-        DiscussionPage = (Button)findViewById(R.id.btnDiscussionPage);
+        ExamReports = (Button)findViewById(R.id.btnTeacherExamReports);
+        DiscussionPage = (Button)findViewById(R.id.btnTeacherDiscussion);
 
         //Instantiating
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -67,6 +68,14 @@ public class TeacherHomePage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentProfile = new Intent(TeacherHomePage.this, Attendance.class);
                 startActivity(intentProfile);
+            }
+        });
+
+        schedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentSchedule = new Intent(TeacherHomePage.this, Schedules.class);
+                startActivity(intentSchedule);
             }
         });
 
