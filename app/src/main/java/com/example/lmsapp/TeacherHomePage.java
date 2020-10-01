@@ -20,7 +20,7 @@ public class TeacherHomePage extends AppCompatActivity {
 
     //Declaring Variables
     TextView FullName;
-    Button subjects, schedule, teacherProfile, ExamReports, DiscussionPage;
+    Button subjects, schedule, attendance, ExamReports, DiscussionPage;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth fbAuth;
     String userID;
@@ -31,9 +31,9 @@ public class TeacherHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_home_page);
 
         //mapping variables to items
-        FullName = (TextView)findViewById(R.id.txtTeacherName);
+        FullName = (TextView)findViewById(R.id.txtFullName);
         subjects = (Button)findViewById(R.id.btnTeacherMySubjects);
-        teacherProfile = (Button)findViewById(R.id.btnTeacherViewProfile);
+        attendance = (Button)findViewById(R.id.btnAttendance);
         ExamReports = (Button)findViewById(R.id.btnExamReports);
         DiscussionPage = (Button)findViewById(R.id.btnDiscussionPage);
 
@@ -62,10 +62,10 @@ public class TeacherHomePage extends AppCompatActivity {
             }
         });
 
-        teacherProfile.setOnClickListener(new View.OnClickListener() {
+        attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentProfile = new Intent(TeacherHomePage.this, TeacherHomePage.class);
+                Intent intentProfile = new Intent(TeacherHomePage.this, Attendance.class);
                 startActivity(intentProfile);
             }
         });

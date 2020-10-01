@@ -155,7 +155,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.91"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTeacherName"
+        app:layout_constraintTop_toBottomOf="@+id/txtFullName"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -172,7 +172,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/txtTeacherName"
+        android:id="@+id/txtFullName"
         android:layout_width="214dp"
         android:layout_height="46dp"
         android:layout_marginTop="19dp"
