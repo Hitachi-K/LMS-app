@@ -1,6 +1,6 @@
 package com.example.lmsapp;
 
-import androidx.annotation.NonNull;
+import  androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -11,7 +11,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.w3c.dom.Document;
 
 public class Login extends AppCompatActivity {
 
@@ -89,32 +85,30 @@ public class Login extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 progressDialog.dismiss();
                                 String userEmail = fbAuth.getCurrentUser().getEmail();
+                                // Logging in by type
+                                CollectionReference usersRef = firebaseFirestore.collection("Users");
+                                String userID = fbAuth.getCurrentUser().getUid();
+                                usersRef.document(userID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                String type = document.getString("Type");
+                                                if(type.equals("Student")) {
+                                                    startActivity(new Intent(Login.this, StudentHomePage.class));
+                                                } else if (type.equals("Teacher")) {
+                                                    startActivity(new Intent(Login.this, TeacherHomePage.class));
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
                                 Toast.makeText(Login.this, "Successfully Logged in: " + userEmail, Toast.LENGTH_SHORT).show();
                             }
-
                             else{
                                 progressDialog.dismiss();
-                                Toast.makeText(Login.this, "Error!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
-                    // Logging in by type
-                    CollectionReference usersRef = firebaseFirestore.collection("Users");
-                    String userID = fbAuth.getCurrentUser().getUid();
-                    usersRef.document(userID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    String type = document.getString("Type");
-                                    if(type.equals("Student")) {
-                                        startActivity(new Intent(Login.this, StudentHomePage.class));
-                                    } else if (type.equals("Teacher")) {
-                                        startActivity(new Intent(Login.this, TeacherHomePage.class));
-                                    }
-                                }
+                                Toast.makeText(Login.this, "Error! "+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
