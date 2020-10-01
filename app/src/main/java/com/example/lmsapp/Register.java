@@ -3,21 +3,28 @@ package com.example.lmsapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
@@ -25,16 +32,18 @@ public class Register extends AppCompatActivity {
     Button btnCancel, btnRegister;
     EditText regName, regEmail, regUsername, regContact, regPassword;
     CheckBox checkStudent, checkTeacher;
-    DatabaseReference databaseReference;
-    User user;
-    int counter;
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+    String userID, userEmail, type;
+
+    //Progress dialog
+    ProgressDialog progressDialog;
 
     //Methods to clear all inputs
     public void clearControls() {
         regName.setText("");
         regEmail.setText("");
         regContact.setText("");
-        regUsername.setText("");
         regContact.setText("");
         regPassword.setText("");
         checkStudent.setChecked(false);
@@ -51,42 +60,41 @@ public class Register extends AppCompatActivity {
         regName = (EditText)findViewById(R.id.txtRegName);
         regContact = (EditText)findViewById(R.id.txtRegContact);
         regEmail = (EditText)findViewById(R.id.txtRegEmail);
-        regUsername = (EditText)findViewById(R.id.txtRegUsername);
         regPassword = (EditText)findViewById(R.id.txtRegPassword);
         btnRegister= (Button)findViewById(R.id.btnRegister);
         btnCancel = (Button)findViewById(R.id.btnCancel);
         checkStudent = (CheckBox)findViewById(R.id.checkBoxStudent);
         checkTeacher = (CheckBox)findViewById(R.id.checkBoxTeacher);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Registering..");
 
-        user = new User();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         //Defining values
         final String checkStudentValue = "Student";
         final String checkTeacherValue = "Teacher";
 
-        //real-time database connection
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("User");
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    counter = (int)dataSnapshot.getChildrenCount();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         //Enabling on-click for button register
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // declared variables for email and password
+                final String email = regEmail.getText().toString().trim();
+                String password = regPassword.getText().toString().trim();
+                final String name = regName.getText().toString().trim();
+                final long contact = Long.parseLong(regContact.getText().toString().trim());
+
                 try {
-                    if (TextUtils.isEmpty(regName.getText().toString())) {
+
+                    // validation
+                    if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                        regEmail.setError("Invalid Email");
+                        regEmail.setFocusable(true);
+                    }
+                    else if (TextUtils.isEmpty(regName.getText().toString())) {
                         Toast.makeText(getApplicationContext(), "Please Enter your name", Toast.LENGTH_SHORT).show();
                     }
                     else if (TextUtils.isEmpty(regEmail.getText().toString())) {
@@ -95,45 +103,67 @@ public class Register extends AppCompatActivity {
                     else if(TextUtils.isEmpty(regContact.getText().toString())) {
                         Toast.makeText(getApplicationContext(), "Please enter your Contact", Toast.LENGTH_SHORT).show();
                     }
-                    else if(TextUtils.isEmpty(regUsername.getText().toString())) {
-                        Toast.makeText(getApplicationContext(), "Please Enter UserName", Toast.LENGTH_SHORT).show();
-                    }
                     else if(TextUtils.isEmpty(regPassword.getText().toString())) {
                         Toast.makeText(getApplicationContext(),"Please Enter Password", Toast.LENGTH_SHORT).show();
                     }
                     else if (regPassword.length()<8) {
                         regPassword.setError("Password minimum 8 characters required");
                         regPassword.setFocusable(true);
-                    }
+                    }  //end of validation
+
                     else {
-                        user.setName(regName.getText().toString().trim());
-                        user.setEmail(regEmail.getText().toString().trim());
-                        user.setContact(Long.parseLong(regContact.getText().toString().trim()));
-                        user.setUserName(regUsername.getText().toString().trim());
-                        user.setPassword(regPassword.getText().toString().trim());
-                        databaseReference.child("U"+(counter + 1)).setValue(user);
-
                         if (checkStudent.isChecked()) {
-                            user.setType(checkStudentValue);
-                            databaseReference.child("U"+(counter + 1)).setValue(user);
-                            Intent intentRegister = new Intent(Register.this, StudentHomePage.class);
-                            startActivity(intentRegister);
+                            type = checkStudentValue;
                         }
-
                         if (checkTeacher.isChecked()) {
-                            user.setType(checkTeacherValue);
-                            databaseReference.child("U"+(counter + 1)).setValue(user);
-                            Intent intentRegister = new Intent(Register.this, TeacherHomePage.class);
-                            startActivity(intentRegister);
+                            type = checkTeacherValue;
                         }
-                        Toast.makeText(getApplicationContext(),"Successfully Registered", Toast.LENGTH_SHORT).show();
-                        clearControls();
+                        progressDialog.show();
+
+                        // Registering method
+                        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(Register.this,new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            progressDialog.dismiss();
+
+                                            userID = firebaseAuth.getCurrentUser().getUid();
+                                            userEmail = firebaseAuth.getCurrentUser().getEmail();
+                                            DocumentReference docRef = firebaseFirestore.collection("Users").document(userID);
+                                            Map<String, Object> user = new HashMap<>();
+                                            user.put("Name", name);
+                                            user.put("Contact", contact);
+                                            user.put("Email", email);
+
+                                            docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("TAG", "onSuccess: Registered " + userID);
+                                                    Toast.makeText(Register.this, "Successfully registered: " + userEmail, Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                            if (type == checkStudentValue) {
+                                                startActivity(new Intent(getApplicationContext(), StudentHomePage.class));
+                                            }
+                                            else if (type == checkTeacherValue) {
+                                                startActivity(new Intent(getApplicationContext(), TeacherHomePage.class));
+                                            }
+                                        }
+                                        else {
+                                            // If sign in fails, display a message to the user.
+                                            progressDialog.dismiss();
+                                            Toast.makeText(Register.this, "Error!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                        clearControls();  //method to clear the inputs
                     }
                 }
                 catch (NumberFormatException e) {
                     Toast.makeText(getApplicationContext(),"Invalid Contact Number", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -147,4 +177,5 @@ public class Register extends AppCompatActivity {
         });
 
     }
+
 }

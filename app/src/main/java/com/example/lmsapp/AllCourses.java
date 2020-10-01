@@ -16,7 +16,7 @@ public class AllCourses extends AppCompatActivity {
         setContentView(R.layout.activity_all_courses);
     }
 
-    public void changeFragment(View view){
+    /*public void changeFragment(View view){
         Fragment fragment;
         if (view == findViewById(R.id.btnAllCourses)){
             fragment = new all_courses();
@@ -32,5 +32,5 @@ public class AllCourses extends AppCompatActivity {
             ft.replace(R.id.fragment,fragment);
             ft.commit();
         }
-    }
+    }*/
 }

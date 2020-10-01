@@ -21,9 +21,6 @@ public class StudentProfile extends AppCompatActivity {
     EditText txtStudentID, txtStudentUsername, txtStudentEmail, txtStudentContact, txtStudentPassword;
     Button btnEdit;
     DatabaseReference dbref;
-    int counter;
-    User user;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +34,6 @@ public class StudentProfile extends AppCompatActivity {
         txtStudentContact = (EditText)findViewById(R.id.txtStudentContact);
         txtStudentPassword = (EditText)findViewById(R.id.txtStudentPassword);
         btnEdit = (Button)findViewById(R.id.btnEdit);
-
-        user = new User();
-
-        // connection with the real-time database
-        dbref = FirebaseDatabase.getInstance().getReference().child("User");
-        dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()) {
-                    counter = (int)dataSnapshot.getChildrenCount();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         //to obtain the data by type
         Query checkType = dbref.orderByChild("type").equalTo("Student");
