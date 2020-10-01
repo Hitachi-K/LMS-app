@@ -9,12 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TeacherHomePage"></activity>
+        <activity android:name=".DiscussionPage"></activity>
+        <activity android:name=".ExamReport" />
+        <activity android:name=".Subjects" />
+        <activity android:name=".TeacherHomePage" />
         <activity android:name=".AllCourses" />
-        <activity android:name=".StudentProfile">
-        </activity>
-        <activity android:name=".StudentHomePage">
-        </activity>
+        <activity android:name=".StudentProfile" />
+        <activity android:name=".StudentHomePage" />
         <activity android:name=".TeacherProfile" />
         <activity android:name=".Attendance" />
         <activity android:name=".Register" />
