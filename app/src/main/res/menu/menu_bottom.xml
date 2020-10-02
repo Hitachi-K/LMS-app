@@ -7,24 +7,24 @@
         android:id="@+id/home"
         android:icon="@drawable/ic_home"
         android:title="Home"
-        app:cnb_backgroundColor="#2A638E"
-        app:cnb_iconColor="#fff"
-        app:cnb_textColor="#fff"/>
+        app:cnb_backgroundColor="#F39920"
+        app:cnb_iconColor="#2A638E"
+        app:cnb_textColor="#2A638E"/>
 
     <item
         android:id="@+id/course"
         android:icon="@drawable/ic_baseline_menu_book_24"
         android:title="Courses"
-        app:cnb_backgroundColor="#2A638E"
-        app:cnb_iconColor="#fff"
-        app:cnb_textColor="#fff"/>
+        app:cnb_backgroundColor="#F39920"
+        app:cnb_iconColor="#2A638E"
+        app:cnb_textColor="#2A638E"/>
 
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Profile"
-        app:cnb_backgroundColor="#2A638E"
-        app:cnb_iconColor="#fff"
-        app:cnb_textColor="#fff"/>
+        app:cnb_backgroundColor="#F39920"
+        app:cnb_iconColor="#2A638E"
+        app:cnb_textColor="#2A638E"/>
 
 </menu>

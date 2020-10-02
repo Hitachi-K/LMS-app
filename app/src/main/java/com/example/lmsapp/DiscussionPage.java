@@ -45,12 +45,15 @@ public class DiscussionPage extends AppCompatActivity {
                 switch (id) {
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(),StudentHomePage.class));
+                        overridePendingTransition(0,0);
                         break;
                     case R.id.course:
                         startActivity(new Intent(getApplicationContext(), AllCourses.class));
+                        overridePendingTransition(0,0);
                         break;
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), StudentProfile.class));
+                        overridePendingTransition(0,0);
                         break;
                 }
             }

@@ -50,12 +50,15 @@ public class TeacherHomePage extends AppCompatActivity {
                 switch (id) {
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(),TeacherHomePage.class));
+                        overridePendingTransition(0,0);
                         break;
                     case R.id.course:
                         startActivity(new Intent(getApplicationContext(), Subjects.class));
+                        overridePendingTransition(0,0);
                         break;
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), TeacherProfile.class));
+                        overridePendingTransition(0,0);
                         break;
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.lmsapp;
 
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,11 +18,13 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class AllCourses extends AppCompatActivity {
 
+    //defining variables
     TextView FullName;
     FirebaseAuth fbAuth;
     FirebaseFirestore firebaseFirestore;
     ChipNavigationBar buttonNah;
     String userID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +44,15 @@ public class AllCourses extends AppCompatActivity {
                 switch (id) {
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(),StudentHomePage.class));
+                        overridePendingTransition(0,0);
                         break;
                     case R.id.course:
                         startActivity(new Intent(getApplicationContext(), AllCourses.class));
+                        overridePendingTransition(0,0);
                         break;
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), StudentProfile.class));
+                        overridePendingTransition(0,0);
                         break;
                 }
             }
@@ -70,23 +76,4 @@ public class AllCourses extends AppCompatActivity {
         });
     }
 
-
-
-    /*public void changeFragment(View view){
-        Fragment fragment;
-        if (view == findViewById(R.id.btnAllCourses)){
-            fragment = new all_courses();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragment,fragment);
-            ft.commit();
-        }
-        if (view == findViewById(R.id.btnMyCourses)){
-            fragment = new my_courses() ;
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragment,fragment);
-            ft.commit();
-        }
-    }*/
 }
