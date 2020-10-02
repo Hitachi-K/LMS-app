@@ -15,12 +15,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class StudentHomePage extends AppCompatActivity {
 
     // declaring variables
     TextView FullName;
     Button myCourses, schedule, viewProfile, ExamReport, DiscussionPage;
+    ChipNavigationBar buttonNah;
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth fbAuth;
@@ -38,6 +40,27 @@ public class StudentHomePage extends AppCompatActivity {
         viewProfile = (Button)findViewById(R.id.btnViewStudentProfile);
         ExamReport = (Button)findViewById(R.id.btnExamReports);
         DiscussionPage = (Button)findViewById(R.id.btnDiscussionPage);
+        buttonNah = findViewById(R.id.bottom_nav);
+
+        buttonNah.setItemSelected(R.id.home, true);
+
+        //on-selected item listener for the bottonNav
+        buttonNah.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int id) {
+                switch (id) {
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),StudentHomePage.class));
+                        break;
+                    case R.id.course:
+                        startActivity(new Intent(getApplicationContext(), AllCourses.class));
+                        break;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), StudentProfile.class));
+                        break;
+                }
+            }
+        });
 
         //Instantiating
         fbAuth = FirebaseAuth.getInstance();

@@ -17,11 +17,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class StudentProfile extends AppCompatActivity {
 
     //Declaring variables
     Button Logout;
+    ChipNavigationBar buttonNah;
 
 
     @Override
@@ -31,6 +33,27 @@ public class StudentProfile extends AppCompatActivity {
 
         //mapping variables to items
         Logout = (Button)findViewById(R.id.btnLogout);
+        buttonNah = findViewById(R.id.bottom_nav);
+
+        buttonNah.setItemSelected(R.id.profile, true);
+
+        //on-selected item listener for the bottonNav
+        buttonNah.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int id) {
+                switch (id) {
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),StudentHomePage.class));
+                        break;
+                    case R.id.course:
+                        startActivity(new Intent(getApplicationContext(), AllCourses.class));
+                        break;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), StudentProfile.class));
+                        break;
+                }
+            }
+        });
 
         // on-click listener for logout button
         Logout.setOnClickListener(new View.OnClickListener() {

@@ -15,6 +15,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class TeacherHomePage extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class TeacherHomePage extends AppCompatActivity {
     Button subjects, schedule, attendance, ExamReports, DiscussionPage;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth fbAuth;
+    ChipNavigationBar buttonNah;
     String userID;
 
     @Override
@@ -37,6 +39,27 @@ public class TeacherHomePage extends AppCompatActivity {
         attendance = (Button)findViewById(R.id.btnAttendance);
         ExamReports = (Button)findViewById(R.id.btnTeacherExamReports);
         DiscussionPage = (Button)findViewById(R.id.btnTeacherDiscussion);
+        buttonNah = findViewById(R.id.bottom_nav);
+
+        buttonNah.setItemSelected(R.id.home, true);
+
+        //on-selected item listener for the bottonNav
+        buttonNah.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int id) {
+                switch (id) {
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),TeacherHomePage.class));
+                        break;
+                    case R.id.course:
+                        startActivity(new Intent(getApplicationContext(), Subjects.class));
+                        break;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), TeacherProfile.class));
+                        break;
+                }
+            }
+        });
 
         //Instantiating
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -90,7 +113,7 @@ public class TeacherHomePage extends AppCompatActivity {
         DiscussionPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentDiscussion = new Intent(TeacherHomePage.this, DiscussionPage.class);
+                Intent intentDiscussion = new Intent(TeacherHomePage.this, DiscussionTeacher.class);
                 startActivity(intentDiscussion);
             }
         });

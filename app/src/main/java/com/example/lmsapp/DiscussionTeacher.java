@@ -15,38 +15,38 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
-public class AllCourses extends AppCompatActivity {
+public class DiscussionTeacher extends AppCompatActivity {
 
+    //Declaring variables
     TextView FullName;
     FirebaseAuth fbAuth;
     FirebaseFirestore firebaseFirestore;
-    ChipNavigationBar buttonNah;
     String userID;
+    ChipNavigationBar bottonNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_courses);
+        setContentView(R.layout.activity_discussion_teacher);
 
-        //Mapping the variables to the items
+        //Mapping variables to items
         FullName = (TextView)findViewById(R.id.txtFullName);
-        buttonNah = findViewById(R.id.bottom_nav);
-
-        buttonNah.setItemSelected(R.id.course, true);
+        bottonNav = findViewById(R.id.bottom_nav);
 
         //on-selected item listener for the bottonNav
-        buttonNah.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+        bottonNav.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int id) {
+
                 switch (id) {
                     case R.id.home:
-                        startActivity(new Intent(getApplicationContext(),StudentHomePage.class));
+                        startActivity(new Intent(getApplicationContext(),TeacherHomePage.class));
                         break;
                     case R.id.course:
-                        startActivity(new Intent(getApplicationContext(), AllCourses.class));
+                        startActivity(new Intent(getApplicationContext(), Subjects.class));
                         break;
                     case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), StudentProfile.class));
+                        startActivity(new Intent(getApplicationContext(), TeacherProfile.class));
                         break;
                 }
             }
@@ -69,24 +69,4 @@ public class AllCourses extends AppCompatActivity {
             }
         });
     }
-
-
-
-    /*public void changeFragment(View view){
-        Fragment fragment;
-        if (view == findViewById(R.id.btnAllCourses)){
-            fragment = new all_courses();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragment,fragment);
-            ft.commit();
-        }
-        if (view == findViewById(R.id.btnMyCourses)){
-            fragment = new my_courses() ;
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragment,fragment);
-            ft.commit();
-        }
-    }*/
 }
