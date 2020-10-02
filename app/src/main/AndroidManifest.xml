@@ -16,20 +16,20 @@
         <activity android:name=".ExamReport" />
         <activity android:name=".Subjects" />
         <activity android:name=".TeacherHomePage" />
-        <activity android:name=".AllCourses">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".AllCourses"/>
         <activity android:name=".StudentProfile" />
         <activity android:name=".StudentHomePage" />
         <activity android:name=".TeacherProfile" />
         <activity android:name=".Attendance" />
         <activity android:name=".Register" />
         <activity android:name=".Login" />
-        <activity android:name=".StartingPage"></activity>
+        <activity android:name=".StartingPage">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
