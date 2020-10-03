@@ -2,10 +2,13 @@ package com.example.lmsapp;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -23,7 +26,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.net.ConnectException;
+import static android.app.Activity.RESULT_OK;
 
 public class add_Content extends Fragment {
 
@@ -32,13 +35,11 @@ public class add_Content extends Fragment {
     ImageButton selectItem;
     TextView status;
     String userID;
+    Uri pdfUri; //url thats meant for local storage
 
     //permissions constants
     private static final int STORAGE_REQUEST_CODE = 100;
-
-    //arrays of permission to be requested
-    String storagePermissions[];
-    String readStoragePermissions[];
+    private static final int PDF_ACTIVITY_FOR_RESULT = 200;
 
     //Progress dialog
     ProgressDialog progressDialog;
@@ -70,7 +71,7 @@ public class add_Content extends Fragment {
                     selectPdf();
                 }
                 else {
-                    //ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, );
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_REQUEST_CODE );
                 }
             }
         });
@@ -81,10 +82,6 @@ public class add_Content extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
 
-        //init arrays of permission
-        storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        readStoragePermissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-
         //init progress dialog
         progressDialog = new ProgressDialog(getActivity());
 
@@ -92,49 +89,45 @@ public class add_Content extends Fragment {
     }
 
     private void selectPdf() {
+        // to offer user to select a file using file manager
+        // we will be using an intent
+
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT); //to fetch files
+
+        startActivityForResult(intent, PDF_ACTIVITY_FOR_RESULT);
     }
 
-    private boolean checkStoragePermission() {
-        //check of storage permission is enabled or not
-        //return true if enabled
-        //return false if not enabled
-        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                == (PackageManager.PERMISSION_GRANTED);
-        return result;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // check whether user has selected a file or not (ex:pdf)
+
+        if (requestCode == PDF_ACTIVITY_FOR_RESULT && resultCode== RESULT_OK && data!=null)
+        {
+            pdfUri = data.getData(); //return the uri of the selected file
+        }
+        else {
+            Toast.makeText(getActivity(), "Please select a file", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void requestStoragePermission() {
-        //request runtime storage permission
-        ActivityCompat.requestPermissions(getActivity(), readStoragePermissions, STORAGE_REQUEST_CODE);
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         /*This method is called when user press allow or deny from permissions request dialog
         here we will handle the permission cases (Allowed & denied)
          */
-        switch (requestCode) {
-            case STORAGE_REQUEST_CODE: {
-
-                // picking from gallery, first check if storage permissions allowed or not
-                if (grantResults.length>0) {
-                    boolean readStorageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if (readStorageAccepted) {
-                        //permissions enabled
-                        pickfromStorage();
-                    }
-                    else {
-                        //permission denied
-                        Toast.makeText(getActivity(), "Please enable storage permissions", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            }
+        if (requestCode == STORAGE_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
+            selectPdf();
         }
+        else {
+            Toast.makeText(getActivity(), "Please give Storage access permission", Toast.LENGTH_SHORT).show();
+        }
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void pickfromStorage() {
-    }
 
 }
