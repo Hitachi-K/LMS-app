@@ -6,6 +6,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -25,6 +27,7 @@ public class Subjects extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
     ChipNavigationBar buttonNah;
     String userID;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,15 @@ public class Subjects extends AppCompatActivity {
         //Mapping variables to items
         FullName = (TextView)findViewById(R.id.txtFullName);
         buttonNah = findViewById(R.id.bottom_nav);
+        button = findViewById(R.id.btnSubject);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Subjects.this, SubjectContent.class);
+                startActivity(intent);
+            }
+        });
 
         buttonNah.setItemSelected(R.id.course, true);
 
