@@ -85,7 +85,7 @@ public class SubjectContent extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
 
         //Instantiating
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        /*firebaseFirestore = FirebaseFirestore.getInstance();
         fbAuth = FirebaseAuth.getInstance();
 
         //getting the User ID
@@ -99,7 +99,7 @@ public class SubjectContent extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 FullName.setText(value.getString("Name"));
             }
-        });
+        });*/
     }
 
     // inner view pager adapter class

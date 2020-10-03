@@ -83,7 +83,7 @@
                 android:id="@+id/tabLayout_tab"
                 android:background="@color/white"
                 app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/orange" />
+                app:tabSelectedTextColor="@color/orange"/>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
