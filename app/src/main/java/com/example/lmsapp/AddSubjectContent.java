@@ -24,7 +24,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -38,8 +41,8 @@ public class AddSubjectContent extends AppCompatActivity {
     //declaring variables
     Button btnUpload;
     ImageButton selectItem;
-    TextView status;
-    String userID;
+    TextView status, FullName;
+    String userID, fileName;
     Uri pdfUri; //url that's meant for local storage
 
     //permissions constants
@@ -59,6 +62,7 @@ public class AddSubjectContent extends AppCompatActivity {
         setContentView(R.layout.activity_add_subject_content);
 
         selectItem = findViewById(R.id.selectFile);
+        FullName = findViewById(R.id.txtFullName);
         btnUpload = findViewById(R.id.btnUpload);
         status = findViewById(R.id.status);
 
@@ -91,6 +95,20 @@ public class AddSubjectContent extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+
+
+        //getting the User ID
+        userID = firebaseAuth.getCurrentUser().getUid();
+
+        //Obtaining the Full Name of the current user
+        DocumentReference documentReference = firebaseFirestore.collection("Users").document(userID);
+
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                FullName.setText(value.getString("Name"));
+            }
+        });
     }
 
     private void uploadFile(Uri pdfUri) {
@@ -112,9 +130,10 @@ public class AddSubjectContent extends AppCompatActivity {
                         String url = taskSnapshot.getUploadSessionUri().toString(); //return the url of the uploaded file
                         // Store the uri in the database
                         userID = firebaseAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference = firebaseFirestore.collection("Files").document(userID);
+                        DocumentReference documentReference = firebaseFirestore.collection("Files").document();
                         Map<String, Object> user = new HashMap<>();
                         user.put("URI", url);
+                        user.put("name", fileName);
 
                         documentReference.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -164,6 +183,7 @@ public class AddSubjectContent extends AppCompatActivity {
         if (requestCode == PDF_ACTIVITY_FOR_RESULT && resultCode == RESULT_OK && data != null) {
             pdfUri = data.getData(); //return the uri of the selected file
             status.setText("A file is selected: " + data.getData().getLastPathSegment());
+            fileName = pdfUri.getLastPathSegment();
         } else {
             Toast.makeText(AddSubjectContent.this, "Please select a file", Toast.LENGTH_SHORT).show();
         }

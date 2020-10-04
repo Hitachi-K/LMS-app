@@ -64,7 +64,7 @@ public class SubjectContent extends AppCompatActivity {
 
                         break;
                     case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), StudentProfile.class));
+                        startActivity(new Intent(getApplicationContext(), TeacherProfile.class));
 
                         break;
                 }
