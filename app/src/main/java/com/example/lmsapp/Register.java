@@ -85,7 +85,7 @@ public class Register extends AppCompatActivity {
                 final String email = regEmail.getText().toString().trim();
                 final String password = regPassword.getText().toString().trim();
                 final String name = regName.getText().toString().trim();
-                final long contact = Long.parseLong(regContact.getText().toString().trim());
+                final String contact = regContact.getText().toString().trim();
 
                 try {
 

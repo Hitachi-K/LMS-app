@@ -53,7 +53,7 @@ public class TeacherHomePage extends AppCompatActivity {
 
                         break;
                     case R.id.course:
-                        startActivity(new Intent(getApplicationContext(), Subjects.class));
+                        startActivity(new Intent(getApplicationContext(), SubjectContent.class));
 
                         break;
                     case R.id.profile:
@@ -84,7 +84,7 @@ public class TeacherHomePage extends AppCompatActivity {
         subjects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentSubject = new Intent(TeacherHomePage.this, Subjects.class);
+                Intent intentSubject = new Intent(TeacherHomePage.this, SubjectContent.class);
                 startActivity(intentSubject);
             }
         });

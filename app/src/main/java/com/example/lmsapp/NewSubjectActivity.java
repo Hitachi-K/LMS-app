@@ -17,22 +17,19 @@ public class NewSubjectActivity extends AppCompatActivity {
 
     private EditText editTextTitle;
     private EditText editTextDescription;
-    private NumberPicker numberPickerPriority;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_subject);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_close_24);
         setTitle("Add Subject");
 
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextDescription = findViewById(R.id.edit_text_description);
-        numberPickerPriority = findViewById(R.id.number_picker_priority);
 
-        numberPickerPriority.setMinValue(1);
-        numberPickerPriority.setMaxValue(100);
     }
 
     @Override
@@ -56,14 +53,13 @@ public class NewSubjectActivity extends AppCompatActivity {
     private void saveNote() {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
-        int priority = numberPickerPriority.getValue();
         if (title.trim().isEmpty() || description.trim().isEmpty()) {
             Toast.makeText(this, "Please insert a title and description", Toast.LENGTH_SHORT).show();
             return;
         }
         CollectionReference notebookRef = FirebaseFirestore.getInstance()
                 .collection("Subjects");
-        notebookRef.add(new Note(title, description, priority));
+        notebookRef.add(new Note(title, description));
         Toast.makeText(this, "Note added", Toast.LENGTH_SHORT).show();
         finish();
     }

@@ -22,7 +22,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 public class StudentProfile extends AppCompatActivity {
 
     //Declaring variables
-    Button Logout;
+    Button Logout, buttonEdit;
     ChipNavigationBar buttonNah;
 
 
@@ -34,6 +34,7 @@ public class StudentProfile extends AppCompatActivity {
         //mapping variables to items
         Logout = (Button)findViewById(R.id.btnLogout);
         buttonNah = findViewById(R.id.bottom_nav);
+        buttonEdit = findViewById(R.id.btnEdit);
 
         buttonNah.setItemSelected(R.id.profile, true);
 
@@ -68,5 +69,13 @@ public class StudentProfile extends AppCompatActivity {
             }
         });
 
+        //on-click listener for edit
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StudentProfile.this, UpdateStudentProfile.class);
+                startActivity(intent);
+            }
+        });
     }
 }

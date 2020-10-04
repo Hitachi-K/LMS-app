@@ -13,7 +13,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 public class TeacherProfile extends AppCompatActivity {
 
     //Declaring variables
-    Button Logout;
+    Button Logout, edit;
     ChipNavigationBar buttonNah;
 
     @Override
@@ -24,6 +24,7 @@ public class TeacherProfile extends AppCompatActivity {
         //mapping variables to items
         Logout = (Button)findViewById(R.id.btnLogout);
         buttonNah = findViewById(R.id.bottom_nav);
+        edit = findViewById(R.id.btnEdit);
 
         buttonNah.setItemSelected(R.id.profile, true);
 
@@ -55,6 +56,15 @@ public class TeacherProfile extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();
+            }
+        });
+
+        // on click-listener to edit
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TeacherProfile.this, UpdateStudentProfile.class);
+                startActivity(intent);
             }
         });
     }
