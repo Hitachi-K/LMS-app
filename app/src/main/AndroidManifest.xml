@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lmsapp">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,15 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SubjectContent">
-        </activity>
+        <activity android:name=".NewSubjectActivity"></activity>
+        <activity android:name=".ViewContent" />
+        <activity android:name=".AddSubjectContent" />
+        <activity android:name=".SubjectContent" />
         <activity android:name=".DiscussionTeacher" />
         <activity android:name=".Schedules" />
         <activity android:name=".DiscussionPage" />
         <activity android:name=".ExamReport" />
         <activity android:name=".Subjects" />
         <activity android:name=".TeacherHomePage" />
-        <activity android:name=".AllCourses"/>
+        <activity android:name=".AllCourses" />
         <activity android:name=".StudentProfile" />
         <activity android:name=".StudentHomePage" />
         <activity android:name=".TeacherProfile" />

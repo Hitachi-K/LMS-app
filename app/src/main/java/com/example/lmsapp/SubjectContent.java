@@ -10,6 +10,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -27,17 +29,13 @@ import java.util.List;
 public class SubjectContent extends AppCompatActivity {
 
     //Declaring variables
+    Button addContent, ViewContent;
     FirebaseAuth fbAuth;
     FirebaseFirestore firebaseFirestore;
     TextView FullName;
     ChipNavigationBar buttonNah;
-    ViewPager viewPager;
-    TabLayout tabLayout;
     String userID;
 
-    //fragments
-    all_Content all_content;
-    add_Content add_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +43,9 @@ public class SubjectContent extends AppCompatActivity {
         setContentView(R.layout.activity_subject_content);
 
         // mapping variables to the items
-        viewPager = findViewById(R.id.view_pager);
-        tabLayout = findViewById(R.id.tabLayout_tab);
         FullName = (TextView)findViewById(R.id.txtFullName);
+        addContent = findViewById(R.id.btnAddContent);
+        ViewContent = findViewById(R.id.btnViewContent);
         buttonNah = findViewById(R.id.bottom_nav);
 
         buttonNah.setItemSelected(R.id.course, true);
@@ -59,33 +57,38 @@ public class SubjectContent extends AppCompatActivity {
                 switch (id) {
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(),StudentHomePage.class));
-                        overridePendingTransition(0,0);
+
                         break;
                     case R.id.course:
                         startActivity(new Intent(getApplicationContext(), AllCourses.class));
-                        overridePendingTransition(0,0);
+
                         break;
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), StudentProfile.class));
-                        overridePendingTransition(0,0);
+
                         break;
                 }
             }
         });
 
-        all_content = new all_Content();
-        add_content = new add_Content();
+        addContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SubjectContent.this, AddSubjectContent.class);
+                startActivity(intent);
+            }
+        });
 
-        tabLayout.setupWithViewPager(viewPager);
-
-        // view pager adapter
-        SubjectContent.ViewPagerAdapter viewPagerAdapter = new SubjectContent.ViewPagerAdapter(getSupportFragmentManager(),0);
-        viewPagerAdapter.addFragment(all_content, "All Content");
-        viewPagerAdapter.addFragment(add_content, "Add Content");
-        viewPager.setAdapter(viewPagerAdapter);
+        ViewContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SubjectContent.this, ViewContent.class);
+                startActivity(intent);
+            }
+        });
 
         //Instantiating
-        /*firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
         fbAuth = FirebaseAuth.getInstance();
 
         //getting the User ID
@@ -99,40 +102,7 @@ public class SubjectContent extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 FullName.setText(value.getString("Name"));
             }
-        });*/
+        });
     }
 
-    // inner view pager adapter class
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-
-        List<Fragment> fragments = new ArrayList<>();
-        List<String> fragmentTitle = new ArrayList<>();
-
-        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
-        }
-
-        // custom method to add fragment by title
-        public void addFragment(Fragment fragment, String title) {
-            fragments.add(fragment);
-            fragmentTitle.add(title);
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return fragmentTitle.get(position);
-        }
-    }
 }

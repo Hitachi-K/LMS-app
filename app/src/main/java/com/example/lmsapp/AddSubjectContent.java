@@ -1,21 +1,18 @@
 package com.example.lmsapp;
 
+import  androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -36,9 +33,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.app.Activity.RESULT_OK;
-
-public class add_Content extends Fragment {
+public class AddSubjectContent extends AppCompatActivity {
 
     //declaring variables
     Button btnUpload;
@@ -58,30 +53,24 @@ public class add_Content extends Fragment {
     FirebaseStorage firebaseStorage;
     FirebaseAuth firebaseAuth;
 
-
-    public add_Content() {
-        // Required empty public constructor
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_add__content, container, false);
-        //mapping variables to the items
-        selectItem = view.findViewById(R.id.selectFile);
-        btnUpload = view.findViewById(R.id.btnUpload);
-        status = view.findViewById(R.id.status);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_subject_content);
+
+        selectItem = findViewById(R.id.selectFile);
+        btnUpload = findViewById(R.id.btnUpload);
+        status = findViewById(R.id.status);
 
         selectItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED)
+                if (ContextCompat.checkSelfPermission(AddSubjectContent.this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
                 {
                     selectPdf();
                 }
                 else {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_REQUEST_CODE );
+                    ActivityCompat.requestPermissions(AddSubjectContent.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_REQUEST_CODE );
                 }
             }
         });
@@ -93,7 +82,7 @@ public class add_Content extends Fragment {
                     uploadFile(pdfUri);
                 }
                 else {
-                    Toast.makeText(getActivity(), "Select a File", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddSubjectContent.this, "Select a File", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -102,12 +91,11 @@ public class add_Content extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        return view;
     }
 
     private void uploadFile(Uri pdfUri) {
 
-        progressDialog = new ProgressDialog(getActivity());
+        progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle("Uploading..");
         progressDialog.setProgress(0);
@@ -117,35 +105,35 @@ public class add_Content extends Fragment {
         StorageReference storageReference = firebaseStorage.getReference(); //returns path
 
         storageReference.child("Uploads").child(fileName).putFile(pdfUri)
-        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                String url = taskSnapshot.getUploadSessionUri().toString(); //return the url of the uploaded file
-                // Store the uri in the database
-                userID = firebaseAuth.getCurrentUser().getUid();
-                DocumentReference documentReference = firebaseFirestore.collection("Files").document(userID);
-                Map<String, Object> user = new HashMap<>();
-                user.put("URI", url);
-
-                documentReference.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()) {
-                            Toast.makeText(getActivity(), "File successfully uploaded", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                        }
-                        else {
-                            Toast.makeText(getActivity(), "File upload unsuccessful", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                        }
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        String url = taskSnapshot.getUploadSessionUri().toString(); //return the url of the uploaded file
+                        // Store the uri in the database
+                        userID = firebaseAuth.getCurrentUser().getUid();
+                        DocumentReference documentReference = firebaseFirestore.collection("Files").document(userID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("URI", url);
+
+                        documentReference.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(AddSubjectContent.this, "File successfully uploaded", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                }
+                                else {
+                                    Toast.makeText(AddSubjectContent.this, "File upload unsuccessful", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                }
+                            }
+                        });
                     }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "File not successfully uploaded", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddSubjectContent.this, "File not successfully uploaded", Toast.LENGTH_SHORT).show();
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -172,16 +160,14 @@ public class add_Content extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         // check whether user has selected a file or not (ex:pdf)
 
-        if (requestCode == PDF_ACTIVITY_FOR_RESULT && resultCode== RESULT_OK && data!=null)
-        {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PDF_ACTIVITY_FOR_RESULT && resultCode == RESULT_OK && data != null) {
             pdfUri = data.getData(); //return the uri of the selected file
-            status.setText("A file is selected: "+ data.getData().getLastPathSegment());
-        }
-        else {
-            Toast.makeText(getActivity(), "Please select a file", Toast.LENGTH_SHORT).show();
+            status.setText("A file is selected: " + data.getData().getLastPathSegment());
+        } else {
+            Toast.makeText(AddSubjectContent.this, "Please select a file", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -193,11 +179,9 @@ public class add_Content extends Fragment {
             selectPdf();
         }
         else {
-            Toast.makeText(getActivity(), "Please give Storage access permission", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddSubjectContent.this, "Please give Storage access permission", Toast.LENGTH_SHORT).show();
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
-
 }
