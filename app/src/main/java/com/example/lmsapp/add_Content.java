@@ -45,7 +45,7 @@ public class add_Content extends Fragment {
     ImageButton selectItem;
     TextView status;
     String userID;
-    Uri pdfUri; //url that's meant for local storage
+    Uri pdfUri; //uri that's meant for local storage
 
     //permissions constants
     private static final int STORAGE_REQUEST_CODE = 100;

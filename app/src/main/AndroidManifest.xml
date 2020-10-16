@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpdateStudentProfile"></activity>
+        <activity android:name=".UpdateTeacherProfile"></activity>
+        <activity android:name=".UpdateStudentProfile" />
         <activity android:name=".NewSubjectActivity" />
         <activity android:name=".ViewContent" />
         <activity android:name=".AddSubjectContent" />

@@ -72,7 +72,7 @@ public class AddSubjectContent extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(AddSubjectContent.this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)
                 {
                     selectPdf();
-                }
+                } 
                 else {
                     ActivityCompat.requestPermissions(AddSubjectContent.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_REQUEST_CODE );
                 }
